@@ -1,0 +1,47 @@
+{
+  "users": [
+    {
+      "Userid": "1",
+      "firstName": "Monkey.D.",
+      "lastName": "Lufy",
+      "email": "monkey.d.lufy@gmail.com",
+      "password": "strawhat",
+      "id": "38f3",
+      "isSignIn": true
+    }
+  ],
+  "notes": [
+    {
+      "id": "6591",
+      "Userid": "1",
+      "noteTitle": "hi",
+      "noteMsg": "sdfghjk",
+      "color": "#aeccdc",
+      "archive": false
+    },
+    {
+      "id": "4d1b",
+      "Userid": "1",
+      "noteTitle": "Monkey.D.Lufy",
+      "noteMsg": "I gona be king of the pirate",
+      "color": "#e2f6d3",
+      "archive": false
+    },
+    {
+      "id": "9236",
+      "Userid": "1",
+      "noteTitle": "",
+      "noteMsg": "bvvvj",
+      "color": "#faafa8",
+      "archive": false
+    },
+    {
+      "id": "e013",
+      "Userid": "1",
+      "noteTitle": "",
+      "noteMsg": "ahhhhhhhhhh\n\n\n\n\n\n\nvffffffffff",
+      "color": "#ffffff",
+      "archive": false
+    }
+  ]
+}
