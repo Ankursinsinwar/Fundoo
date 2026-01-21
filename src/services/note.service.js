@@ -1,10 +1,19 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:3001/Notes";
+const API_URL = "http://localhost:3001/notes";
 
 export const getNotes = (userId) => {
-  return axios.get(`${API_URL}?Userid=${userId}`);
+  return axios.get(`${API_URL}?Userid=${userId}&archive=false&trash=false`);
 };
+
+export const getArchiveNotes = (userId) => {
+  return axios.get(`${API_URL}?Userid=${userId}&archive=true&trash=false`);
+};
+
+export const getTrashNotes = (userId) => {
+  return axios.get(`${API_URL}?Userid=${userId}&trash=true`);
+};
+
 
 export const addNote = (note) => {
   return axios.post(API_URL, note);

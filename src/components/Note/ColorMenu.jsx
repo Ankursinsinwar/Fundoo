@@ -5,7 +5,7 @@ import BrushOutlinedIcon from '@mui/icons-material/BrushOutlined';
 import ImageOutlinedIcon from '@mui/icons-material/ImageOutlined';
 import PushPinOutlinedIcon from '@mui/icons-material/PushPinOutlined';
 
-export default function ColorMenu({ setNoteColor }) {
+export default function ColorMenu({ setNoteColor, handleColorChange }) {
   const [showPallette, setShowPallette] = useState(false);
   const colors = [
     { name: 'Default', hex: "#ffffff" },
@@ -21,6 +21,7 @@ export default function ColorMenu({ setNoteColor }) {
     { name: 'Blossom', hex: "#e9e3d4" },
     { name: 'Clay', hex: "#efeff1" },
   ]
+
   return (
     <ClickAwayListener onClickAway={() => setShowPallette(false)}>
 
@@ -39,6 +40,7 @@ export default function ColorMenu({ setNoteColor }) {
                   onClick={(e) => {
                     // e.stopPropagation();
                     setNoteColor(item.hex);
+                    handleColorChange(item.hex);
                   }}
                   sx={{
                     width: 30,

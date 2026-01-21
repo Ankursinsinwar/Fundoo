@@ -5,12 +5,14 @@ import CheckBoxOutlinedIcon from '@mui/icons-material/CheckBoxOutlined';
 import BrushOutlinedIcon from '@mui/icons-material/BrushOutlined';
 import ImageOutlinedIcon from '@mui/icons-material/ImageOutlined';
 import PushPinOutlinedIcon from '@mui/icons-material/PushPinOutlined';
+import { addNote } from "../../services/note.service";
+
 
 
 import AllIcon from './AllIcon';
 
 
-export default function TakeANote() {
+export default function TakeANote({fetchNotes} ) {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const [noteData, setNoteData] = useState({
@@ -27,26 +29,31 @@ export default function TakeANote() {
 
 
   const saveNote = async () => {
-    if (!noteData.noteTitle && !noteData.noteMsg) {
-      setIsExpanded(false);
-      return;
-    }
-    const payload = {
-      Userid: "1",               // later from auth
-      noteTitle: noteData.noteTitle,
-      noteMsg: noteData.noteMsg,
-      color: NoteColor,
-      archive: false,
-    };
-    try {
-      await axios.post('http://localhost:3001/notes', payload);
-    } catch (error) {
-      console.error(error);
-    }
-    setNoteData({ noteTitle: '', noteMsg: '' });
-    setNoteColor('#ffffff');
+  if (!noteData.noteTitle && !noteData.noteMsg) {
     setIsExpanded(false);
+    return;
+  }
+
+  const payload = {
+    Userid: "1", // later from auth
+    noteTitle: noteData.noteTitle,
+    noteMsg: noteData.noteMsg,
+    color: NoteColor,
+    archive: false,
   };
+
+  try {
+    await addNote(payload);
+    fetchNotes();
+  } catch (err) {
+    console.error(err);
+  }
+
+  setNoteData({ noteTitle: "", noteMsg: "" });
+  setNoteColor("#ffffff");
+  setIsExpanded(false);
+};
+
 
 
   const [NoteColor, setNoteColor] = useState('#ffffff');

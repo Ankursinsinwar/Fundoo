@@ -5,16 +5,52 @@ import BrushOutlinedIcon from '@mui/icons-material/BrushOutlined';
 import ImageOutlinedIcon from '@mui/icons-material/ImageOutlined';
 import PushPinOutlinedIcon from '@mui/icons-material/PushPinOutlined';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
+import { deleteNote } from "../../services/note.service";
+import { updateNote } from "../../services/note.service";
+
 
 import AllIcon from './AllIcon';
 
 
-export default function ShowNotes({ note, viewType }) {
+export default function ShowNotes({ note, viewType, fetchNotes }) {
     const [isshowd, setIsshow] = useState(false);
 
     const [NoteColor, setNoteColor] = useState('#ffffff');
-    // const viewType = viewType.viewType;
-    // console.log('sn', viewType);
+
+
+    const handleColorChange = async (color) => {
+        try {
+            await updateNote(note.id, { color });
+            fetchNotes();
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+
+    const handleDelete = async () => {
+        try {
+            await updateNote(note.id, { trash: true });
+            fetchNotes();
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    const [isArchive, setArchive] = useState(note.archive)
+
+    const handleArchive = async () => {
+        try {
+            const newArchiveValue = !isArchive;
+            setArchive(newArchiveValue);
+            await updateNote(note.id, { archive: newArchiveValue });
+            fetchNotes();
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+
 
     return (
         <>
@@ -45,10 +81,12 @@ export default function ShowNotes({ note, viewType }) {
                 }}
             >
 
-                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent:'space-between', }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', }}>
                     <Typography variant="h5"
                         sx={{
                             width: '80%',
+                            mt: 1,
+                            mb: 1,
                             // background:
                             //     "linear-gradient(to right, #00a1ff, #ff0500)",
                             // WebkitBackgroundClip: "text",
@@ -56,14 +94,14 @@ export default function ShowNotes({ note, viewType }) {
                         }}>
                         {note.noteTitle}
                     </Typography>
-                    <IconButton aria-label="new list" sx={{position:'relative', zIndex: (isshowd ? 1 : -1) }}>
+                    <IconButton aria-label="new list" sx={{ position: 'relative', zIndex: (isshowd ? 1 : -1) }}>
                         <PushPinOutlinedIcon />
                     </IconButton>
                 </Box>
 
 
                 <Box sx={{ display: 'flex', flexDirection: { xs: "column", md: "row" }, alignItems: 'center' }}>
-                    <Typography variant="h5"
+                    <Typography variant="h7"
                         sx={{
                             width: '80%',
                             // background:
@@ -86,16 +124,16 @@ export default function ShowNotes({ note, viewType }) {
                         zIndex: (isshowd ? 1 : -1)
                     }}
                 >
-                    <Box sx={{ display: 'flex', flexWrap: 'wrap',}}>
-                        <AllIcon setNoteColor={setNoteColor} />
+                    <Box sx={{ display: 'flex', flexWrap: 'wrap', }}>
+                        <AllIcon setNoteColor={setNoteColor} handleColorChange={handleColorChange} handleArchive={handleArchive} />
                     </Box>
                     <Box
                         sx={{ cursor: 'pointer', fontSize: '14px', p: 1, fontWeight: 500 }}
                     >
                         {/* <Typography variant="h6" sx={{ fontSize: 15 }}>delete</Typography> */}
-                        <IconButton aria-label="new list" sx={{cursor:'default'}}>
-                  <DeleteOutlinedIcon fontSize="small" />
-                </IconButton>
+                        <IconButton aria-label="new list" onClick={handleDelete} sx={{ cursor: 'default' }}>
+                            <DeleteOutlinedIcon fontSize="small" />
+                        </IconButton>
                     </Box>
                 </Box>
 

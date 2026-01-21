@@ -4,7 +4,8 @@ import ShowNotes from '../Note/ShowNotes'
 import { Box } from '@mui/material'
 import Masonry from '@mui/lab/Masonry';
 import { useOutletContext } from 'react-router-dom'
-import axios from 'axios';
+import { getNotes } from "../../services/note.service";
+
 
 
 export default function AddNote() {
@@ -12,18 +13,26 @@ export default function AddNote() {
     // console.log('an:', viewType);
     const [notes, setNotes] = useState([]);
 
-    useEffect(() => {
-        axios
-            .get('http://localhost:3001/notes?Userid=1')
-            .then((res) => {
-                setNotes(res.data);
-            })
-            .catch((err) => console.error(err));
-    }, []);
+   const fetchNotes = async () => {
+  try {
+    const res = await getNotes("1");
+    setNotes([...res.data].reverse());
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+
+useEffect(() => {
+  fetchNotes();
+}, []);
+
+
+
     return (
         <>
             <Box sx={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <TakeANote />
+                <TakeANote fetchNotes={fetchNotes}/>
 
                 {/* LIST VIEW */}
                 {viewType === 'List' && (
@@ -40,7 +49,7 @@ export default function AddNote() {
                         }}
                     >
                         {notes.map((note, index) => (
-                            <ShowNotes key={note.Noteid} note={note} viewType={viewType} />
+                            <ShowNotes key={note.Noteid} note={note} viewType={viewType} fetchNotes={fetchNotes} />
                         ))}
                     </Box>
                 )}
@@ -70,7 +79,7 @@ export default function AddNote() {
                             }}
                         >
                             {notes.map((note) => (
-                                <ShowNotes key={note.Noteid} note={note} viewType={viewType} />
+                                <ShowNotes key={note.Noteid} note={note} viewType={viewType} fetchNotes={fetchNotes} />
                             ))}
                         </Masonry>
                     </Box>

@@ -8,6 +8,7 @@ import Lables from './components/Lables/Lables';
 import Archive from './components/Archive/Archive';
 import Trash from './components/Trash/Trash';
 import AddNote from './components/AddNote/AddNote';
+import ProtectedRoute from './Routers/ProtectedRouter';
 
 export default function ReactRouting() {
   return (

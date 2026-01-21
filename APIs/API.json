@@ -17,31 +17,35 @@
       "noteTitle": "hi",
       "noteMsg": "sdfghjk",
       "color": "#aeccdc",
-      "archive": false
+      "archive": false,
+      "trash": false
     },
     {
       "id": "4d1b",
       "Userid": "1",
       "noteTitle": "Monkey.D.Lufy",
       "noteMsg": "I gona be king of the pirate",
-      "color": "#e2f6d3",
-      "archive": false
-    },
-    {
-      "id": "9236",
-      "Userid": "1",
-      "noteTitle": "",
-      "noteMsg": "bvvvj",
-      "color": "#faafa8",
-      "archive": false
+      "color": "#d3bfdb",
+      "archive": true,
+      "trash": false
     },
     {
       "id": "e013",
       "Userid": "1",
       "noteTitle": "",
       "noteMsg": "ahhhhhhhhhh\n\n\n\n\n\n\nvffffffffff",
-      "color": "#ffffff",
-      "archive": false
+      "color": "#faafa8",
+      "archive": false,
+      "trash": true
+    },
+    {
+      "id": "474e",
+      "Userid": "1",
+      "noteTitle": "tt",
+      "noteMsg": "hchch",
+      "color": "#fff8b8",
+      "archive": true,
+      "trash": true
     }
   ]
 }
