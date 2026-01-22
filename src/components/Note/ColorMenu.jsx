@@ -23,7 +23,9 @@ export default function ColorMenu({ setNoteColor, handleColorChange }) {
   ]
 
   return (
-    <ClickAwayListener onClickAway={() => setShowPallette(false)}>
+    <ClickAwayListener
+      onClickAway={() => setShowPallette(false)}
+    >
 
     <Box sx={{ display: 'flex', gap: 1, position: 'relative', p: 0, m: 0, overflow:'visible' }} onClick={() => setShowPallette(!showPallette)} >
       <Tooltip title="Background options">
@@ -32,7 +34,8 @@ export default function ColorMenu({ setNoteColor, handleColorChange }) {
         {/* </IconButton> */}
       </Tooltip>
       {showPallette && (
-        <Paper elevation={3} sx={{ position: 'absolute', top: 38, left: { xs: -80, md: -10 }, p: 2, zIndex: 10, width: { xs: "40vw", md: "30vw" }, borderRadius:5 }}>
+        <Paper elevation={3} sx={{ 
+          position: 'absolute', top: 35, left: { xs: -80, md: -10 }, p: 1, zIndex: 50, width: { xs: "30vw", md: "25vw" }, borderRadius:2 }}>
           <Box sx={{ display: 'flex', flexWrap: { xs: "wrap", md: "nowrap" }, justifyContent: 'space-evenly',}}>
             {colors.map((item) => (
               <Tooltip title={item.name} key={item.hex}>
@@ -43,8 +46,8 @@ export default function ColorMenu({ setNoteColor, handleColorChange }) {
                     handleColorChange(item.hex);
                   }}
                   sx={{
-                    width: 30,
-                    height: 30,
+                    width: 28,
+                    height: 28,
                     borderRadius: '50%',
                     backgroundColor: item.hex,
                     cursor: 'pointer',

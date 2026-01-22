@@ -11,10 +11,10 @@ import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 
 const menuItems = [
   { text: "Notes", icon: LightbulbOutlinedIcon, link: "/dashboard" },
-  { text: "Reminder", icon: NotificationsNoneOutlinedIcon, link: "/dashboard/Reminder" },
-  { text: "Edit Labels", icon: EditOutlinedIcon, link: "/dashboard/Labels" },
-  { text: "Archive", icon: ArchiveOutlinedIcon, link: "/dashboard/Archive" },
-  { text: "Trash", icon: DeleteOutlinedIcon, link: "/dashboard/Trash" },
+  { text: "Reminder", icon: NotificationsNoneOutlinedIcon, link: "/dashboard/reminder" },
+  { text: "Edit Labels", icon: EditOutlinedIcon, link: "/dashboard/labels" },
+  { text: "Archive", icon: ArchiveOutlinedIcon, link: "/dashboard/archive" },
+  { text: "Trash", icon: DeleteOutlinedIcon, link: "/dashboard/trash" },
 ];
 
 export default function Sidebar({ isOpen }) {
@@ -42,7 +42,7 @@ export default function Sidebar({ isOpen }) {
               key={item.text}
               disablePadding
               sx={{
-                height: '25%',
+                height: '23%',
                 width: drawerWidth,
                 overflow: "hidden",
                 backgroundColor: (isActive && isOpen) ? "#feefc3" : "transparent",

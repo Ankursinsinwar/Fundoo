@@ -6,26 +6,27 @@ import TakeNote from '../../components/Note/TakeNote';
 import Box from '@mui/material/Box';
 
 const UserContext = createContext();
+const user = JSON.parse(localStorage.getItem("user"));
 
 export default function Dashboard() {
     const [isOpen, setIsOpen] = useState(true);
     const [viewType, setViewType] = useState('List');
-    // console.log('das:', viewType);
+    console.log('das:', user);
 
-  const handleOpen = () => {
-    setIsOpen((prev) => !prev);
-  };
+    const handleOpen = () => {
+        setIsOpen((prev) => !prev);
+    };
 
     return (
         <>
-            <Box sx={{ display: 'flex', flexDirection:'column' }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
 
-                <Header handleOpen={handleOpen} viewType={viewType} setViewType={setViewType} />
+                <Header user={user} handleOpen={handleOpen} viewType={viewType} setViewType={setViewType} />
 
                 <Sidebar isOpen={isOpen} handleOpen={handleOpen} />
 
                 {/* <TakeNote /> */}
-                <Outlet context={viewType}/>
+                <Outlet context={viewType} />
 
             </Box>
 

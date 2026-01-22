@@ -14,7 +14,7 @@ import AllIcon from './AllIcon';
 
 export default function TakeANote({fetchNotes} ) {
   const [isExpanded, setIsExpanded] = useState(false);
-
+const user = JSON.parse(localStorage.getItem("user"));
   const [noteData, setNoteData] = useState({
     noteTitle: '',
     noteMsg: '',
@@ -35,11 +35,12 @@ export default function TakeANote({fetchNotes} ) {
   }
 
   const payload = {
-    Userid: "1", // later from auth
+    Userid: user.id, // later from auth
     noteTitle: noteData.noteTitle,
     noteMsg: noteData.noteMsg,
     color: NoteColor,
     archive: false,
+    trash: false,
   };
 
   try {
@@ -152,7 +153,7 @@ export default function TakeANote({fetchNotes} ) {
             {isExpanded && (
               <Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-between', mt: 1 }}>
                 <Box sx={{ display: 'flex' }}>
-                  <AllIcon setNoteColor={setNoteColor} />
+                  <AllIcon setNoteColor={setNoteColor} IsExpanded={isExpanded} />
                 </Box>
                 <Box
                   onClick={saveNote}

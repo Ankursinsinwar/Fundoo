@@ -73,7 +73,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function Header({ handleOpen, viewType, setViewType }) {
+export default function Header({user, handleOpen, viewType, setViewType }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   
@@ -119,7 +119,7 @@ export default function Header({ handleOpen, viewType, setViewType }) {
     },
   }}
     >
-      <Popup />
+      <Popup user={user}/>
     </Popover>
   );
 
@@ -146,10 +146,10 @@ export default function Header({ handleOpen, viewType, setViewType }) {
 
 const pageTitles = {
   "/dashboard": "Fundo",
-  "/dashboard/Reminder": "Reminder",
-  "/dashboard/Labels": "Edit Labels",
-  "/dashboard/Archive": "Archive",
-  "/dashboard/Trash": "Trash",
+  "/dashboard/reminder": "Reminder",
+  "/dashboard/labels": "Edit Labels",
+  "/dashboard/archive": "Archive",
+  "/dashboard/trash": "Trash",
 };
 
 const title = pageTitles[location.pathname];
@@ -213,7 +213,7 @@ const title = pageTitles[location.pathname];
           color="inherit"
         >
           {/* <AccountCircle /> */}
-          <Avatar sx={{ width: 25, height: 25, background:'orange' }}>{/*<img src={acc} alt="A" style={{ height: 30 }} />*/}A</Avatar>
+          <Avatar sx={{ width: 25, height: 25, background:'orange' }}>{/*<img src={acc} alt="A" style={{ height: 30 }} />*/}{user.firstName[0]}</Avatar>
         </IconButton>
       </MenuItem>
     </Menu>
@@ -247,12 +247,14 @@ const title = pageTitles[location.pathname];
                 <MenuIcon />
               </Tooltip>
             </IconButton>
-
+          <Box sx={{width:38}}>
               <img src={logo} alt="keep"
                 style={{ height: 38, width: 38, marginRight: 6, marginLeft: 0.8 , display: (title=='Fundo'? 'block':'none')}} />
+          </Box>
 
             <Tooltip title={title}>
               <Typography variant="h6" sx={{
+                width:150,
                 fontSize: 22,
                 fontWeight: 500,
                 color: `#5f6368`,
@@ -311,7 +313,7 @@ const title = pageTitles[location.pathname];
               >
                 {/* <AccountCircle /> */}
                 <Tooltip title="Fundo Account">
-                  <Avatar sx={{ width: 32, height: 32, background:'orange'}}>{/*<img src={acc} alt="A" style={{ height: 40 }} />*/}A</Avatar>
+                  <Avatar sx={{ width: 32, height: 32, background:'orange'}}>{/*<img src={acc} alt="A" style={{ height: 40 }} />*/}{user.firstName[0]}</Avatar>
                 </Tooltip>
               </IconButton>
             </Box>

@@ -1,51 +1,59 @@
 {
   "users": [
     {
-      "Userid": "1",
-      "firstName": "Monkey.D.",
-      "lastName": "Lufy",
+      "id": "c931",
+      "firstName": "Lufy",
+      "lastName": "Monkey.D.",
       "email": "monkey.d.lufy@gmail.com",
-      "password": "strawhat",
-      "id": "38f3",
+      "password": "123456789",
       "isSignIn": true
     }
   ],
   "notes": [
     {
       "id": "6591",
-      "Userid": "1",
+      "Userid": "c931",
       "noteTitle": "hi",
       "noteMsg": "sdfghjk",
-      "color": "#aeccdc",
+      "color": "#b4ddd3",
       "archive": false,
       "trash": false
     },
     {
       "id": "4d1b",
-      "Userid": "1",
+      "Userid": "c931",
       "noteTitle": "Monkey.D.Lufy",
       "noteMsg": "I gona be king of the pirate",
-      "color": "#d3bfdb",
-      "archive": true,
+      "color": "#faafa8",
+      "archive": false,
       "trash": false
     },
     {
       "id": "e013",
-      "Userid": "1",
+      "Userid": "c931",
       "noteTitle": "",
       "noteMsg": "ahhhhhhhhhh\n\n\n\n\n\n\nvffffffffff",
-      "color": "#faafa8",
-      "archive": false,
-      "trash": true
+      "color": "#aaaaaa",
+      "archive": true,
+      "trash": false
     },
     {
-      "id": "474e",
-      "Userid": "1",
-      "noteTitle": "tt",
-      "noteMsg": "hchch",
-      "color": "#fff8b8",
+      "Userid": "c931",
+      "noteTitle": "665",
+      "noteMsg": "bkbkbk",
+      "color": "#e2f6d3",
       "archive": true,
-      "trash": true
+      "trash": false,
+      "id": "7hPVAad"
+    },
+    {
+      "Userid": "c931",
+      "noteTitle": "tt",
+      "noteMsg": "asdfghjklas\n\n\n\n\n\n\n/n\n",
+      "color": "#f39f76",
+      "archive": false,
+      "trash": false,
+      "id": "pWUMKne"
     }
   ]
 }
