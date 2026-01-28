@@ -143,7 +143,7 @@ export default function ShowNotes({ note, viewType, fetchNotes }) {
                         }}>
                         {note.noteTitle}
                     </Typography> */}
-                        {/* {isEditing ? ( */}
+                        {(isEditing && !note.trash) ? (
                             <TextField
                                 name="noteTitle"
                                 value={editData.noteTitle}
@@ -153,19 +153,19 @@ export default function ShowNotes({ note, viewType, fetchNotes }) {
                                 InputProps={{ disableUnderline: true }}
                                 sx={{
                                     ml: 2,
-                                    // mb: 1,
+                                    mt: 0.3,
                                     '& .MuiInputBase-input': {fontSize: '1.5rem' }
                                 }}
                             />
-                        {/* ) : ( */}
-                            {/* <Typography
+                        ) : (
+                            <Typography
                                 variant="h5"
                                 sx={{ width: "80%", mt: 1, mb: 1, ml: 2 }}
                                 onClick={() => setIsEditing(true)}
                             >
                                 {note.noteTitle}
-                            </Typography> */}
-                        {/* )} */}
+                            </Typography>
+                        )} 
 
                         <IconButton aria-label="new list" sx={{
                             position: 'relative',
@@ -192,7 +192,7 @@ export default function ShowNotes({ note, viewType, fetchNotes }) {
                             }}>
                             {note.noteMsg}
                         </Typography> */}
-                        {/* {isEditing ? ( */}
+                        {(isEditing && !note.trash) ? (
                             <TextField
                                 name="noteMsg"
                                 value={editData.noteMsg}
@@ -201,16 +201,18 @@ export default function ShowNotes({ note, viewType, fetchNotes }) {
                                 fullWidth
                                 multiline
                                 InputProps={{ disableUnderline: true }}
-                                sx={{ ml: 2 }}
+                                sx={{ ml: 2,
+                                    // mb:0,
+                                 }}
                             />
-                        {/* ) : ( */}
-                            {/* <Typography
+                        ) : (
+                            <Typography
                                 sx={{ width: "80%", ml: 2 }}
                                 onClick={() => setIsEditing(true)}
                             >
                                 {note.noteMsg}
-                            </Typography> */}
-                        {/* )} */}
+                            </Typography>
+                        )}
 
                     </Box>
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import TakeANote from '../Note/TakeNote'
 import ShowNotes from '../Note/ShowNotes'
-import { Box } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import Masonry from '@mui/lab/Masonry';
 import { useOutletContext } from 'react-router-dom'
 import { getTrashNotes } from "../../services/note.service";
@@ -35,6 +35,7 @@ export default function Trash() {
             <Box sx={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 {/* <TakeANote fetchNotes={fetchNotes} /> */}
                 <Box height={90}></Box>
+                  <Typography sx={{width:'80%', textAlign: 'center'}}>Notes will delete after 7 days.</Typography>
 
                 {notes.length === 0 ? (
                     <TempBack />

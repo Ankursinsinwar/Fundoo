@@ -59,7 +59,7 @@ export default function AllIcon({ setNoteColor, handleColorChange, handleArchive
           {IsExpanded ? (
             <></>
           ) : (
-            <IconButton aria-label="new list" onClick={handleTrash} sx={{ cursor: 'default' }}>
+            <IconButton aria-label="new list" onClick={handleTrash}>
               <Tooltip title="Trash">
               <DeleteOutlinedIcon fontSize="small" />
               </Tooltip>
@@ -71,12 +71,12 @@ export default function AllIcon({ setNoteColor, handleColorChange, handleArchive
         </>
       ) : (
         <>
-          <IconButton aria-label="more options" onClick={handleTrash} sx={{ cursor: 'default' }}>
+          <IconButton aria-label="more options" onClick={handleTrash}>
             <Tooltip title="Restore delete">
             <RestoreFromTrashOutlinedIcon fontSize="small" />
             </Tooltip>
           </IconButton>
-          <IconButton aria-label="new list" onClick={handleDelete} sx={{ cursor: 'default' }}>
+          <IconButton aria-label="new list" onClick={handleDelete}>
             <Tooltip title="Parmanent delete">
             <DeleteOutlinedIcon fontSize="small" />
             </Tooltip>
