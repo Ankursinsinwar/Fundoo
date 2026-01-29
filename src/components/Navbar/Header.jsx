@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { useContext } from "react";
+import { UserContext } from "../../context/userContext";
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -73,7 +75,9 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function Header({user, handleOpen, viewType, setViewType }) {
+export default function Header({handleOpen, viewType, setViewType }) {
+  const user = useContext(UserContext);
+  // console.log('h',user);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   

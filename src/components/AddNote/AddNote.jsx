@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext, useCallback } from 'react'
 import TakeANote from '../Note/TakeNote'
 import TempBack from '../TempBack/TempBack'
 import ShowNotes from '../Note/ShowNotes'
@@ -6,29 +6,45 @@ import { Box } from '@mui/material'
 import Masonry from '@mui/lab/Masonry';
 import { useOutletContext } from 'react-router-dom'
 import { getNotes } from "../../services/note.service";
-
+import { UserContext } from '../../context/userContext'
 
 
 export default function AddNote() {
     const viewType = useOutletContext();
-    const user = JSON.parse(localStorage.getItem("user"));
+    // const user = JSON.parse(localStorage.getItem("user"));
+    const user = useContext(UserContext);
     // console.log('an1:', viewType);
     // console.log('an2:', user.id);
     const [notes, setNotes] = useState([]);
 
-    const fetchNotes = async () => {
+    // const fetchNotes = async () => {
+    //     try {
+    //         const res = await getNotes(user.id);
+    //         setNotes([...res.data].reverse());
+    //     } catch (err) {
+    //         console.error(err);
+    //     }
+    // };
+
+    // useEffect(() => {
+    //     fetchNotes();
+    // }, []);
+
+    const fetchNotes = useCallback(async () => {
+        if (!user?.id) return;
+
         try {
             const res = await getNotes(user.id);
             setNotes([...res.data].reverse());
         } catch (err) {
             console.error(err);
         }
-    };
+    }, [user?.id]);
 
 
     useEffect(() => {
         fetchNotes();
-    }, []);
+    }, [fetchNotes]);
 
 
 
@@ -55,7 +71,7 @@ export default function AddNote() {
                                 }}
                             >
                                 {notes.map((note, index) => (
-                                    <ShowNotes key={note.Noteid} note={note} viewType={viewType} fetchNotes={fetchNotes} />
+                                    <ShowNotes key={note.id} note={note} viewType={viewType} fetchNotes={fetchNotes} />
                                 ))}
                             </Box>
                         )}
@@ -64,13 +80,13 @@ export default function AddNote() {
                         {viewType === 'Grid' && (
                             <Box
                                 sx={{
-                                    width: { xs: '100%', sd: '50%', md: '80%' },
+                                    width: { xs: '120%', sd: '50%', md: '80%' },
                                     display: 'flex',
                                     justifyContent: 'center',
                                     mt: 10,
                                     ml: { xs: 1, sd: 0.5, md: 0 },
                                     position: 'relative',
-                                    left: { xs: 10, sd: 80, md: 150 },
+                                    left: { xs: 20, sd: 80, md: 150 },
 
                                 }}
                             >
@@ -88,7 +104,7 @@ export default function AddNote() {
                                     }}
                                 >
                                     {notes.map((note) => (
-                                        <ShowNotes key={note.Noteid} note={note} viewType={viewType} fetchNotes={fetchNotes} />
+                                        <ShowNotes key={note.id} note={note} viewType={viewType} fetchNotes={fetchNotes} />
                                     ))}
                                 </Masonry>
                             </Box>

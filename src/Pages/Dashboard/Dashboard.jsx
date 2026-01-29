@@ -1,17 +1,18 @@
-import React, { useState, createContext, useContext } from "react";
+import React, { useState } from "react";
 import { Outlet, Link } from 'react-router-dom'
 import Header from '../../components/Navbar/Header'
 import Sidebar from '../../components/Sidenav/Sidebar'
 import TakeNote from '../../components/Note/TakeNote';
 import Box from '@mui/material/Box';
+import { UserContext } from "../../context/userContext";
 
-const UserContext = createContext();
+// const UserContext = createContext();
 const user = JSON.parse(localStorage.getItem("user"));
 
 export default function Dashboard() {
     const [isOpen, setIsOpen] = useState(true);
     const [viewType, setViewType] = useState('List');
-    console.log('das:', user);
+    // console.log('das:', user);
 
     const handleOpen = () => {
         setIsOpen((prev) => !prev);
@@ -20,14 +21,17 @@ export default function Dashboard() {
     return (
         <>
             <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                <UserContext.Provider value={user}>
+                    <Header handleOpen={handleOpen} viewType={viewType} setViewType={setViewType} />
 
-                <Header user={user} handleOpen={handleOpen} viewType={viewType} setViewType={setViewType} />
+                
 
                 <Sidebar isOpen={isOpen} handleOpen={handleOpen} />
 
                 {/* <TakeNote /> */}
                 <Outlet context={viewType} />
 
+                    </UserContext.Provider>
             </Box>
 
         </>

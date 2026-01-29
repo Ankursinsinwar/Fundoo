@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext, useCallback } from 'react'
 import TakeANote from '../Note/TakeNote'
 import ShowNotes from '../Note/ShowNotes'
 import { Box, Typography } from '@mui/material'
@@ -6,28 +6,30 @@ import Masonry from '@mui/lab/Masonry';
 import { useOutletContext } from 'react-router-dom'
 import { getTrashNotes } from "../../services/note.service";
 import TempBack from '../TempBack/TempBack'
-
-
+import { UserContext } from '../../context/userContext';
 
 export default function Trash() {
     const viewType = useOutletContext();
-    const user = JSON.parse(localStorage.getItem("user"));
+    // const user = JSON.parse(localStorage.getItem("user"));
+    const user = useContext(UserContext);
     // console.log('an:', viewType);
     const [notes, setNotes] = useState([]);
 
-    const fetchNotes = async () => {
+     const fetchNotes = useCallback(async () => {
+        if (!user?.id) return;
+
         try {
             const res = await getTrashNotes(user.id);
             setNotes([...res.data].reverse());
         } catch (err) {
             console.error(err);
         }
-    };
+    }, [user?.id]);
 
 
     useEffect(() => {
         fetchNotes();
-    }, []);
+    }, [fetchNotes]);
 
 
     return (
@@ -59,7 +61,7 @@ export default function Trash() {
                                 }}
                             >
                                 {notes.map((note, index) => (
-                                    <ShowNotes key={note.Noteid} note={note} viewType={viewType} fetchNotes={fetchNotes} />
+                                    <ShowNotes key={note.id} note={note} viewType={viewType} fetchNotes={fetchNotes} />
                                 ))}
                             </Box>
                         )}
@@ -89,7 +91,7 @@ export default function Trash() {
                                     }}
                                 >
                                     {notes.map((note) => (
-                                        <ShowNotes key={note.Noteid} note={note} viewType={viewType} fetchNotes={fetchNotes} />
+                                        <ShowNotes key={note.id} note={note} viewType={viewType} fetchNotes={fetchNotes} />
                                     ))}
                                 </Masonry>
                             </Box>

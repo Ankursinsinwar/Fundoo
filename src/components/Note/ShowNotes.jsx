@@ -1,4 +1,4 @@
-import React, { useState } from 'react'; // Added useState import
+import React, { useState, useEffect, useCallback, useMemo } from 'react'; // Added useState import
 import { Paper, IconButton, Box, TextField, ClickAwayListener, Typography, Tooltip, Toolbar } from '@mui/material';
 import CheckBoxOutlinedIcon from '@mui/icons-material/CheckBoxOutlined';
 import BrushOutlinedIcon from '@mui/icons-material/BrushOutlined';
@@ -6,7 +6,6 @@ import ImageOutlinedIcon from '@mui/icons-material/ImageOutlined';
 import PushPinOutlinedIcon from '@mui/icons-material/PushPinOutlined';
 import { deleteNote } from "../../services/note.service";
 import { updateNote } from "../../services/note.service";
-
 
 import AllIcon from './AllIcon';
 
@@ -63,7 +62,12 @@ export default function ShowNotes({ note, viewType, fetchNotes }) {
 
     const [isTrash, setTrash] = useState(note.trash)
 
-    const handleTrash = async () => {
+
+    const isEditable = useMemo(() => {  // implimenting useMemo hook (But Doesn't make any difference except making code complex)
+        return !isTrash;
+    }, [isTrash]);
+
+    const handleTrash = useCallback(async () => { // implimenting useCallback hook (But Doesn't make any difference except making code complex)
         try {
             const newTrashValue = !isTrash;
             setTrash(newTrashValue);
@@ -72,17 +76,28 @@ export default function ShowNotes({ note, viewType, fetchNotes }) {
         } catch (err) {
             console.error(err);
         }
-    };
+    }, [note.id, fetchNotes]);
 
 
-    const handleDelete = async () => {
+    // const handleDelete = async () => {
+    //     try {
+    //         await deleteNote(note.id);
+    //         fetchNotes();
+    //     } catch (err) {
+    //         console.error(err);
+    //     }
+    // };
+
+
+    const handleDelete = useCallback(async () => { // implimenting useCallback hook (But Doesn't make any difference except making code complex)
         try {
             await deleteNote(note.id);
             fetchNotes();
         } catch (err) {
             console.error(err);
         }
-    };
+    }, [note.id, fetchNotes]);
+
 
     const [isArchive, setArchive] = useState(note.archive)
 
@@ -97,6 +112,10 @@ export default function ShowNotes({ note, viewType, fetchNotes }) {
         }
     };
 
+    useEffect(() => {
+        setTrash(note.trash);
+        setArchive(note.archive);
+    }, [note.trash, note.archive]);
 
 
     return (
@@ -115,7 +134,7 @@ export default function ShowNotes({ note, viewType, fetchNotes }) {
                         display: 'flex',
                         flexDirection: "column",
                         justifyContent: 'center',
-                        mb: viewType === 'List' ? 9: 'none',
+                        mb: viewType === 'List' ? 9 : 'none',
                         // width:'40vw',
                         // width: { xs: '40vw', md: (viewType === 'List' ? '40vw' : '30%')},
                         // width: viewType === 'List' ? { xs: '40vw', md: '40vw' } :  { xs: '40vw', md: '30vw' },
@@ -124,7 +143,7 @@ export default function ShowNotes({ note, viewType, fetchNotes }) {
                         // overflow: 'hidden',
                         borderRadius: 1,
                         p: 0.5,
-                        // border: '1px solid #e0e0e0',
+                        border: note.color === '#ffffff' ? '1px solid #e0e0e0' : 'none',
                         // boxShadow: '0 1px 2px 0 rgba(60,64,67,0.302), 0 2px 6px 2px rgba(60,64,67,0.149)',
                     }}
                 >
@@ -143,7 +162,7 @@ export default function ShowNotes({ note, viewType, fetchNotes }) {
                         }}>
                         {note.noteTitle}
                     </Typography> */}
-                        {(isEditing && !note.trash) ? (
+                        {(isEditing && isEditable) ? (
                             <TextField
                                 name="noteTitle"
                                 value={editData.noteTitle}
@@ -154,7 +173,7 @@ export default function ShowNotes({ note, viewType, fetchNotes }) {
                                 sx={{
                                     ml: 2,
                                     mt: 0.3,
-                                    '& .MuiInputBase-input': {fontSize: '1.5rem' }
+                                    '& .MuiInputBase-input': { fontSize: '1.5rem' }
                                 }}
                             />
                         ) : (
@@ -165,7 +184,7 @@ export default function ShowNotes({ note, viewType, fetchNotes }) {
                             >
                                 {note.noteTitle}
                             </Typography>
-                        )} 
+                        )}
 
                         <IconButton aria-label="new list" sx={{
                             position: 'relative',
@@ -201,9 +220,10 @@ export default function ShowNotes({ note, viewType, fetchNotes }) {
                                 fullWidth
                                 multiline
                                 InputProps={{ disableUnderline: true }}
-                                sx={{ ml: 2,
+                                sx={{
+                                    ml: 2,
                                     // mb:0,
-                                 }}
+                                }}
                             />
                         ) : (
                             <Typography

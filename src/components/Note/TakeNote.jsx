@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useRef } from 'react';
 import axios from 'axios';
 import { Paper, IconButton, Box, TextField, ClickAwayListener, Typography, Tooltip } from '@mui/material';
 import CheckBoxOutlinedIcon from '@mui/icons-material/CheckBoxOutlined';
@@ -7,14 +7,15 @@ import ImageOutlinedIcon from '@mui/icons-material/ImageOutlined';
 import PushPinOutlinedIcon from '@mui/icons-material/PushPinOutlined';
 import { addNote } from "../../services/note.service";
 
-
-
 import AllIcon from './AllIcon';
+import { UserContext } from '../../context/userContext';
 
 
 export default function TakeANote({fetchNotes} ) {
   const [isExpanded, setIsExpanded] = useState(false);
-const user = JSON.parse(localStorage.getItem("user"));
+// const user = JSON.parse(localStorage.getItem("user"));
+const user = useContext(UserContext);
+console.log('tn',user);
   const [noteData, setNoteData] = useState({
     noteTitle: '',
     noteMsg: '',
@@ -35,7 +36,7 @@ const user = JSON.parse(localStorage.getItem("user"));
   }
 
   const payload = {
-    Userid: user.id, // later from auth
+    Userid: user.id,
     noteTitle: noteData.noteTitle,
     noteMsg: noteData.noteMsg,
     color: NoteColor,

@@ -1,95 +1,38 @@
-import { useState } from "react";
-import { Box, TextField, Button, Typography, Link, IconButton, InputAdornment, } from "@mui/material";
+import { Box, TextField, Button, Typography, Link, IconButton, InputAdornment } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { signup } from "../../../services/auth.service";
 
-
 export default function Left() {
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
-
-  const [showPassword, setShowPassword] = useState(false);
-  const [errors, setErrors] = useState({});
-
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
 
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const { register, handleSubmit, watch, setError, formState: { errors } } = useForm();
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
+  const password = watch("password");
 
-  const handleSubmit = async () => {
-    let newErrors = {};
-
-    if (!formData.firstName.match(/^[A-Za-z]{2,}$/)) {
-      newErrors.firstName = "Enter a valid first name";
-    }
-    if (formData.firstName ===''){
-      newErrors.firstName = "Enter first name";
-    }
-    
-    if (!formData.lastName.match(/^[A-Za-z]{2,}$/)) {
-      newErrors.lastName = "Enter a valid last name";
-    }
-    if (formData.lastName ===''){
-      newErrors.lastName = "Enter last name";
-    }
-    
-    if (!formData.email.endsWith("@gmail.com")) {
-      newErrors.email = "Email must end with @gmail.com";
-    }
-
-    if (formData.email === '') {
-      newErrors.email = "Enter Email";
-    }
-
-    if (formData.password.length < 8) {
-      newErrors.password = "Password must be at least 8 characters";
-    }
-    if (formData.password.length === 0) {
-      newErrors.password = "Enter Password";
-    }
-    if (formData.confirmPassword.length === 0) {
-      newErrors.confirmPassword = "Enter confirm assword";
-    }
-
-    if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = "Passwords do not match";
-    }
-
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-    } else {
-      try {
+  const onSubmit = async (data) => {
+    try {
       await signup({
-        firstName: formData.firstName,
-        lastName: formData.lastName,
-        email: formData.email,
-        password: formData.password
+        firstName: data.firstName,
+        lastName: data.lastName,
+        email: data.email,
+        password: data.password
       });
-
       navigate("/dashboard", { replace: true });
     } catch (err) {
-      setErrors({ email: err.message });
+      setError("email", {
+        type: "manual",
+        message: err.message || "Signup failed"
+      });
     }
-  }
-};
+  };
 
   return (
     <Box sx={{ width: "90%", mx: "auto", mt: 4 }}>
-      {/* Logo */}
       <Typography
         variant="h3"
         fontWeight={500}
@@ -107,99 +50,100 @@ export default function Left() {
         Create your Fundo Account
       </Typography>
 
-      {/* Name Fields */}
-      <Box
-        display="flex"
-        gap={2}
-        sx={{
-          flexDirection: { xs: "column", md: "row" },
-        }}
-      >
+      {/* Names */}
+      <Box display="flex" gap={2} flexDirection={{ xs: "column", md: "row" }}>
         <TextField
           label="First Name"
-          name="firstName"
-          value={formData.firstName}
-          onChange={handleChange}
-          error={Boolean(errors.firstName)}
-          helperText={errors.firstName}
           fullWidth
+          {...register("firstName", {
+            required: "Enter first name",
+            pattern: {
+              value: /^[A-Za-z]{2,}$/,
+              message: "Enter a valid first name"
+            }
+          })}
+          error={!!errors.firstName}
+          helperText={errors.firstName?.message}
         />
 
         <TextField
           label="Last Name"
-          name="lastName"
-          value={formData.lastName}
-          onChange={handleChange}
-          error={Boolean(errors.lastName)}
-          helperText={errors.lastName}
           fullWidth
+          {...register("lastName", {
+            required: "Enter last name",
+            pattern: {
+              value: /^[A-Za-z]{2,}$/,
+              message: "Enter a valid last name"
+            }
+          })}
+          error={!!errors.lastName}
+          helperText={errors.lastName?.message}
         />
       </Box>
 
       {/* Email */}
       <TextField
         label="Your email address"
-        name="email"
-        value={formData.email}
-        onChange={handleChange}
-        error={Boolean(errors.email)}
-        helperText={errors.email}
         fullWidth
         margin="normal"
+        {...register("email", {
+          required: "Enter Email",
+          pattern: {
+            value: /^[^\s@]+@gmail\.com$/,
+            message: "Email must end with @gmail.com"
+          }
+        })}
+        error={!!errors.email}
+        helperText={errors.email?.message}
       />
 
-      <Link href="#" underline="hover" fontSize={14}>
+      <Link underline="hover" fontSize={14}>
         Create a new Gmail address instead
       </Link>
 
-      {/* Password Fields */}
-      <Box
-        display="flex"
-        gap={2}
-        mt={2}
-        sx={{
-          flexDirection: { xs: "column", md: "row" },
-        }}
-      >
+      {/* Passwords */}
+      <Box display="flex" gap={2} mt={2} flexDirection={{ xs: "column", md: "row" }}>
         <TextField
           label="Password"
           type={showPassword ? "text" : "password"}
-          name="password"
-          value={formData.password}
-          onChange={handleChange}
-          error={Boolean(errors.password)}
-          helperText={errors.password}
           fullWidth
+          {...register("password", {
+            required: "Enter Password",
+            minLength: {
+              value: 8,
+              message: "Password must be at least 8 characters"
+            }
+          })}
+          error={!!errors.password}
+          helperText={errors.password?.message}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  edge="end"
-                >
+                <IconButton onClick={() => setShowPassword(p => !p)}>
                   {showPassword ? <VisibilityOff /> : <Visibility />}
                 </IconButton>
               </InputAdornment>
-            ),
+            )
           }}
         />
 
         <TextField
           label="Confirm"
           type={showPassword ? "text" : "password"}
-          name="confirmPassword"
-          value={formData.confirmPassword}
-          onChange={handleChange}
-          error={Boolean(errors.confirmPassword)}
-          helperText={errors.confirmPassword}
           fullWidth
+          {...register("confirmPassword", {
+            required: "Enter confirm password",
+            validate: value =>
+              value === password || "Passwords do not match"
+          })}
+          error={!!errors.confirmPassword}
+          helperText={errors.confirmPassword?.message}
         />
       </Box>
 
-      <Typography variant="caption" color="text.secondary" mt={1} display="block">
+      {/* <Typography variant="caption" color="text.secondary" mt={1} display="block">
         Use 8 or more characters with a mix of letters, numbers & symbols
-      </Typography>
+      </Typography> */}
 
       {/* Actions */}
       <Box display="flex" justifyContent="space-between" alignItems="center" mt={4}>
@@ -207,7 +151,7 @@ export default function Left() {
           Sign in instead
         </Link>
 
-        <Button variant="contained" size="large" onClick={handleSubmit}>
+        <Button variant="contained" size="large" onClick={handleSubmit(onSubmit)}>
           Sign Up
         </Button>
       </Box>

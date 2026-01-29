@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext, useCallback } from 'react'
 import TakeANote from '../Note/TakeNote'
 import ShowNotes from '../Note/ShowNotes'
 import { Box } from '@mui/material'
@@ -6,28 +6,30 @@ import Masonry from '@mui/lab/Masonry';
 import { useOutletContext } from 'react-router-dom'
 import { getArchiveNotes } from "../../services/note.service";
 import TempBack from '../TempBack/TempBack'
-
-
+import { UserContext } from '../../context/userContext';
 
 export default function Archive() {
     const viewType = useOutletContext();
-    const user = JSON.parse(localStorage.getItem("user"));
+    // const user = JSON.parse(localStorage.getItem("user"));
+    const user = useContext(UserContext);
     // console.log('an:', viewType);
     const [notes, setNotes] = useState([]);
 
-    const fetchNotes = async () => {
-        try {
-            const res = await getArchiveNotes(user.id);
-            setNotes([...res.data].reverse());
-        } catch (err) {
-            console.error(err);
-        }
-    };
-
-
-    useEffect(() => {
-        fetchNotes();
-    }, []);
+     const fetchNotes = useCallback(async () => {
+            if (!user?.id) return;
+    
+            try {
+                const res = await getArchiveNotes(user.id);
+                setNotes([...res.data].reverse());
+            } catch (err) {
+                console.error(err);
+            }
+        }, [user?.id]);
+    
+    
+        useEffect(() => {
+            fetchNotes();
+        }, [fetchNotes]);
 
 
 
@@ -57,7 +59,7 @@ export default function Archive() {
                                 }}
                             >
                                 {notes.map((note, index) => (
-                                    <ShowNotes key={note.Noteid} note={note} viewType={viewType} fetchNotes={fetchNotes} />
+                                    <ShowNotes key={note.id} note={note} viewType={viewType} fetchNotes={fetchNotes} />
                                 ))}
                             </Box>
                         )}
@@ -87,7 +89,7 @@ export default function Archive() {
                                     }}
                                 >
                                     {notes.map((note) => (
-                                        <ShowNotes key={note.Noteid} note={note} viewType={viewType} fetchNotes={fetchNotes} />
+                                        <ShowNotes key={note.id} note={note} viewType={viewType} fetchNotes={fetchNotes} />
                                     ))}
                                 </Masonry>
                             </Box>
