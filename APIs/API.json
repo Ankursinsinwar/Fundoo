@@ -7,6 +7,14 @@
       "email": "monkey.d.lufy@gmail.com",
       "password": "123456789",
       "isSignIn": true
+    },
+    {
+      "firstName": "Ankur",
+      "lastName": "Sinsinwar",
+      "email": "ankur.sinsinwar_cs22@gmail.com",
+      "password": "123456789",
+      "isSignIn": true,
+      "id": "CrVYQFC"
     }
   ],
   "notes": [
@@ -33,7 +41,7 @@
       "noteTitle": "hhhhh",
       "noteMsg": "kkkkk",
       "color": "#d4e4ed",
-      "archive": false,
+      "archive": true,
       "trash": false,
       "id": "WTYN6zu"
     },
@@ -42,9 +50,45 @@
       "noteTitle": "ggggg",
       "noteMsg": "hhhhhhhhhh",
       "color": "#e2f6d3",
-      "archive": false,
+      "archive": true,
       "trash": false,
       "id": "fDE7e9W"
+    },
+    {
+      "Userid": "c931",
+      "noteTitle": "ytyt",
+      "noteMsg": "hjhjh",
+      "color": "#fff8b8",
+      "archive": false,
+      "trash": true,
+      "id": "A0c9XSO"
+    },
+    {
+      "Userid": "c931",
+      "noteTitle": "rtyuuhihihi",
+      "noteMsg": "bkkbj",
+      "color": "#d4e4ed",
+      "archive": true,
+      "trash": true,
+      "id": "ykp0BJi"
+    },
+    {
+      "Userid": "CrVYQFC",
+      "noteTitle": "t7t",
+      "noteMsg": "hfy",
+      "color": "#e2f6d3",
+      "archive": false,
+      "trash": false,
+      "id": "fRyaSv8"
+    },
+    {
+      "Userid": "CrVYQFC",
+      "noteTitle": "aaa",
+      "noteMsg": "776",
+      "color": "#aaaaaa",
+      "archive": true,
+      "trash": false,
+      "id": "-9Nii77"
     }
   ]
 }

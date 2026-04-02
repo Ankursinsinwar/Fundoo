@@ -14,7 +14,7 @@ export default function Popup({ user }) {
 
   const handleSignOut = () => {
     localStorage.removeItem("user");
-    navigate("/signup", { replace: true });
+    navigate("/signin", { replace: true });
   };
 
   return (
